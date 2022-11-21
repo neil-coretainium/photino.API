@@ -58,6 +58,22 @@ namespace PhotinoAPI
             return indexHtmlReader.ReadToEnd();
         }
 
+        public static string GetSpecialFolderPath(string folder, string folderOption)
+        {
+
+            if (!Enum.TryParse<Environment.SpecialFolderOption>(folderOption, true, out var specialFolderOption))
+            {
+                specialFolderOption = Environment.SpecialFolderOption.None;
+            }
+
+            if (!Enum.TryParse<Environment.SpecialFolder>(folder, true, out var specialFolder))
+            {
+                return string.Empty;
+            }
+            
+            return Environment.GetFolderPath(specialFolder,specialFolderOption);
+        }
+
         public static string Shell => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "cmd.exe" : "/bin/bash";
 
         public static string Execute(string command)

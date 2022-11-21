@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NativeFileDialogSharp;
 
 namespace PhotinoAPI.Modules.Default
 {
@@ -58,6 +59,20 @@ namespace PhotinoAPI.Modules.Default
             if (recursive) return Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
             return Directory.GetDirectories(path);
         }
+
+        public static string SelectFolder(string defaultPath = null)
+        {
+            var result = Dialog.FolderPicker(defaultPath);
+
+            if (result.IsOk)
+            {
+                return result.Path;
+            }
+
+            return "";
+        }
+
+        public static string GetSpecialFolderPath(string folder, string? folderOption) => PhotinoUtil.GetSpecialFolderPath(folder, folderOption);
 
         public static void CreateFolder(string path) => Directory.CreateDirectory(path);
 
